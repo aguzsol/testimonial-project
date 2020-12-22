@@ -1,12 +1,39 @@
   const customerImage = document.querySelector('#customer-img')
     const customerName = document.querySelector('#customer-name')
     const customerText = document.querySelector('#customer-text')
-    const buttons = document.querySelectorAll('.btn')
+    const btnRight = document.querySelector('.nextBtn')
+    const btnLeft = document.querySelector('.prevBtn')
     let index = 0
     const customers = []
 
     //Create a new customer using a customer constructor
+    function nextContain(e){
+      if (e.target.id == 'nextBtn'){
+        index++
+        if (index > customers.length-1){
+          index=0
+        }
+        customerImage.src=customers[index].img
+        customerName.textContent=customers[index].name
+        customerText.textContent=customers[index].text
+      }
+      else{
+        if(index <= 0){
+          index=4
+        }
+        else{
+          index--
+        }
+        customerImage.src=customers[index].img
+        customerName.textContent=customers[index].name
+        customerText.textContent=customers[index].text
+      }
+      console.log(index)
+    }
     
+    btnRight.addEventListener('click', nextContain)
+    btnLeft.addEventListener('click', nextContain)
+
     //Customer Constructor
     function Customer(img, name, text) {
         this.img = img
@@ -15,7 +42,6 @@
     }
 
     //Create new customer using the constructor function
-
     function createCustomer(img, name, text) {
 
         let fullImg = `./img/customer-${img}.jpg`
@@ -23,7 +49,8 @@
 
         customers.push(customer)
     }
-
+    
+    
     
     createCustomer(0, 'John', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis neque reprehenderit laborum, corporis explicabo assumenda. Porro impedit consectetur animi, reprehenderit recusandae sapiente at aliquam reiciendis modi ipsam rerum suscipit distinctio?')
     createCustomer(1, 'Sandy', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock')
